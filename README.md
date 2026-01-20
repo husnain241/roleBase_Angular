@@ -1,6 +1,14 @@
 # RoleBase
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+This Angular application implements a role-based access control (RBAC) system. It provides user authentication, authorization, and different user interfaces based on assigned roles.
+
+## Features
+
+- **Authentication**: User login and registration components
+- **Authorization**: Role-based guards to restrict access to certain routes
+- **Admin Dashboard**: Exclusive dashboard for users with admin role
+- **User Profile**: Profile management for regular users
+- **Core Services**: Authentication service, HTTP interceptor for token handling, and data models for users and roles
 
 ## Development server
 

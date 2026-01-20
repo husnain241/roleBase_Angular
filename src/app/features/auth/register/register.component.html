@@ -1,0 +1,59 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>Create an Account</h2>
+    <p>Please fill in the details to register.</p>
+
+    <form [formGroup]="regForm" (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Enter your name"
+          [class.error]="regForm.get('username')?.invalid && regForm.get('username')?.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="email@example.com"
+          [class.error]="regForm.get('email')?.invalid && regForm.get('email')?.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Min 6 characters"
+          [class.error]="regForm.get('password')?.invalid && regForm.get('password')?.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Assign Role</label>
+        <select id="role" formControlName="role">
+          <option *ngFor="let r of roles" [value]="r">
+            {{ r }}
+          </option>
+        </select>
+        <small class="help-text">Select 'ADMIN' to access the admin dashboard later.</small>
+      </div>
+
+      <button type="submit" [disabled]="regForm.invalid" class="btn-register">Sign Up</button>
+    </form>
+
+    <div class="register-footer">
+      <p>Already have an account? <a routerLink="/login">Sign in here</a></p>
+    </div>
+  </div>
+
+  
+</div>

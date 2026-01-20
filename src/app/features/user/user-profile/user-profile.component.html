@@ -1,0 +1,97 @@
+<div class="user-profile-container">
+  <div class="profile-header">
+    <h1>User Profile</h1>
+    <p>Manage your account settings and preferences</p>
+  </div>
+
+  <div class="profile-grid">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <div class="profile-avatar">
+        <span class="avatar-icon">👤</span>
+      </div>
+      <div class="profile-info">
+        <h2>{{ currentUser?.username }}</h2>
+        <p class="profile-role">Regular User</p>
+        <p class="profile-email">{{ currentUser?.email }}</p>
+      </div>
+    </div>
+
+    <!-- Account Details -->
+    <div class="details-card">
+      <h3>Account Information</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Full Name</label>
+          <p>{{ currentUser?.username }}</p>
+        </div>
+        <div class="info-item">
+          <label>Email</label>
+          <p>{{ currentUser?.email }}</p>
+        </div>
+        <div class="info-item">
+          <label>User Role</label>
+          <p class="role-badge">USER</p>
+        </div>
+        <div class="info-item">
+          <label>Account Status</label>
+          <p class="status-badge active">Active</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Section -->
+    <div class="security-card">
+      <h3>Security</h3>
+      <div class="security-items">
+        <div class="security-item">
+          <div class="security-info">
+            <p class="security-title">Password</p>
+            <small>Last changed 30 days ago</small>
+          </div>
+          <button class="btn-secondary">Change</button>
+        </div>
+        <div class="security-item">
+          <div class="security-info">
+            <p class="security-title">Two-Factor Authentication</p>
+            <small>Not enabled</small>
+          </div>
+          <button class="btn-secondary">Enable</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Log -->
+    <div class="activity-card">
+      <h3>Recent Activity</h3>
+      <div class="activity-log">
+        <div class="log-item">
+          <div class="log-time">Today</div>
+          <p class="log-message">Logged in from Chrome on Windows</p>
+        </div>
+        <div class="log-item">
+          <div class="log-time">Yesterday</div>
+          <p class="log-message">Updated profile information</p>
+        </div>
+        <div class="log-item">
+          <div class="log-time">2 days ago</div>
+          <p class="log-message">Changed password</p>
+        </div>
+        <div class="log-item">
+          <div class="log-time">1 week ago</div>
+          <p class="log-message">Logged in from Safari on iPhone</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions-card">
+      <h3>Actions</h3>
+      <div class="action-buttons">
+        <button class="btn-primary">Edit Profile</button>
+        <button class="btn-secondary">Download Data</button>
+        <button class="btn-danger">Delete Account</button>
+      </div>
+    </div>
+  </div>
+</div>
