@@ -6,11 +6,21 @@ This Angular application implements a role-based access control (RBAC) system. I
 
 - **Authentication**: User login and registration components
 - **Authorization**: Role-based guards to restrict access to certain routes
-- **Admin Dashboard**: Exclusive dashboard for users with admin role
+- **Admin Dashboard**: Exclusive dashboard for users with admin role, including user management (view, search, create, delete users)
 - **User Profile**: Profile management for regular users
+- **Shared Components**: Navigation bar and loading spinner for better user experience
 - **Core Services**: Authentication service, HTTP interceptor for token handling, and data models for users and roles
 
-## Development server
+## Next Steps
+
+- Implement logout functionality in the navigation bar
+- Add comprehensive error handling and user feedback messages
+- Replace JSON server with a real backend API (e.g., Node.js/Express or ASP.NET)
+- Enhance security with password hashing and JWT token validation
+- Add more user roles and granular permissions
+- Implement unit tests and integration tests for components and services
+- Improve UI/UX with responsive design and better styling
+- Add form validation feedback and accessibility features
 
 To start a local development server, run:
 

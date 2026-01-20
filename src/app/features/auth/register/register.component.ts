@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { Role } from '../../../core/models/role.enum';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -32,12 +33,16 @@ export class RegisterComponent {
   });
 
   onRegister() {
-    console.log("Form Value:", this.regForm.value); // Debug to see if role is captured
-    if (this.regForm.valid) {
-      const { username, email, password, role } = this.regForm.value;
-      this.authService.register(username!, email!, role! as Role , password!);
-      alert('Registration successful!');
-      this.router.navigate(['/login']);
-    }
+  if (this.regForm.valid) {
+    const userData = this.regForm.value as User;
+    
+    this.authService.register(userData).subscribe({
+      next: () => {
+        alert('Registration Successful in JSON Server!');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => console.error('Registration failed', err)
+    });
   }
+}
 }
