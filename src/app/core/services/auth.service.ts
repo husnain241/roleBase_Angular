@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { delay, finalize } from 'rxjs';
+import { Role } from '../models/role.enum';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root' // This makes it a singleton available everywhere
@@ -12,6 +14,7 @@ export class AuthService {
   // We use a Signal to track the current user (Modern Angular way)
   currentUser = signal<User | null>(null);
   isLoading = signal<boolean>(false);
+  private router = inject(Router); // Router inject karein
 
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:3000/users';
@@ -61,19 +64,22 @@ getUsers(): Observable<User[]> {
 deleteUser(id: string): Observable<void> {
   return this.http.delete<void>(`${this.apiUrl}/${id}`);
 }
-
+updateUser(user: User): Observable<User> {
+  return this.http.put<User>(`${this.apiUrl}/${user.id}`, user);
+}
+updateUserRole(id: string, newRole: Role): Observable<User> {
+  return this.http.patch<User>(`${this.apiUrl}/${id}`, { role: newRole });
+}
   
-  // This is already in your service from the Register step, 
-// but ensure it returns the Observable so the Admin can wait for success.
-// createUser(user: User): Observable<User> {
-//   return this.http.post<User>(this.apiUrl, user);
-// }
-
+  
   logout() {
-    this.currentUser.set(null);
+    // 1. Pehle data clear karein
     localStorage.removeItem('user');
-  }
+    this.currentUser.set(null);
 
+    // 2. Phir login page par bhejein
+    this.router.navigate(['/login']); 
+  }
   isAuthenticated(): boolean {
     return !!this.currentUser();
   }

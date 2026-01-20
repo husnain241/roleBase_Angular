@@ -21,6 +21,12 @@ export class AdminDashboardComponent implements OnInit {
   isLoading = this.authService.isLoading;
   showCreateModal = signal<boolean>(false); // Controls the popup
 // Computed signals: These update automatically when 'users' changes
+
+
+isEditMode = signal<boolean>(false);
+  selectedUserId = signal<string | null>(null);
+
+
   totalUsers = computed(() => this.users().length);
   adminCount = computed(() => this.users().filter(u => u.role === 'ADMIN').length);
   userCount = computed(() => this.users().filter(u => u.role === 'USER').length);
@@ -40,7 +46,7 @@ export class AdminDashboardComponent implements OnInit {
       user.email.toLowerCase().includes(query)
     );
   });
-  
+
   ngOnInit() {
     this.loadUsers();
   }
@@ -84,5 +90,79 @@ export class AdminDashboardComponent implements OnInit {
       this.newUser = { username: '', email: '', password: 'password123', role: Role.User }; // Reset
     });
   }
+  // Inside the AdminDashboardComponent class
+
+toggleUserRole(user: User) {
+  // Determine the new role
+  const newRole = user.role === Role.Admin ? Role.User : Role.Admin;
+
+  // Confirm with the Admin
+  if (confirm(`Change ${user.username}'s role to ${newRole}?`)) {
+    this.authService.updateUserRole(user.id, newRole).subscribe({
+      next: (updatedUser) => {
+        // Update the local signal list so the UI changes immediately
+        this.users.update(allUsers => 
+          allUsers.map(u => u.id === user.id ? { ...u, role: newRole } : u)
+        );
+      },
+      error: (err) => alert('Failed to update role')
+    });
+  }
+}
+scrollToTable() {
+  const table = document.querySelector('.user-table');
+  table?.scrollIntoView({ behavior: 'smooth' });
+}
+
+
+  // Function to open modal in Edit Mode
+  openEditModal(user: User) {
+    this.isEditMode.set(true);
+    this.selectedUserId.set(user.id);
+    this.newUser = { ...user }; // Fill form with existing data
+    this.showCreateModal.set(true);
+  }
+
+  onSaveUser() {
+  if (this.isEditMode()) {
+    // UPDATE MODE
+    const updatedData: User = { 
+      ...this.newUser, 
+      id: this.selectedUserId()! // Ensure we keep the same ID
+    };
+
+    this.authService.updateUser(updatedData).subscribe({
+      next: () => {
+        // Update the table signal locally
+        this.users.update(all => all.map(u => u.id === updatedData.id ? updatedData : u));
+        this.closeModal();
+      }
+    });
+  } else {
+    // CREATE MODE
+    const newUser: User = {
+      ...this.newUser,
+      id: Math.random().toString(36).substring(2) // Generate new ID
+    };
+
+    this.authService.register(newUser).subscribe({
+      next: () => {
+        this.users.update(all => [...all, newUser]);
+        this.closeModal();
+      }
+    });
+  }
+}
+
+// Ensure you have a proper closeModal to reset everything
+closeModal() {
+  this.showCreateModal.set(false);
+  this.isEditMode.set(false);
+  this.selectedUserId.set(null);
+  // Reset form to defaults
+  this.newUser = { username: '', email: '', password: 'password123', role: Role.User };
+}
+
+  
 
 }

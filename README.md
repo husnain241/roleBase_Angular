@@ -1,6 +1,6 @@
 # RoleBase
 
-This Angular application implements a role-based access control (RBAC) system. It provides user authentication, authorization, and different user interfaces based on assigned roles.
+This Angular application implements a role-based access control (RBAC) system. It provides user authentication, authorization, and different user interfaces based on assigned roles. Currently, it uses JSON Server as a mock backend for demonstration purposes.
 
 ## Features
 
@@ -13,7 +13,6 @@ This Angular application implements a role-based access control (RBAC) system. I
 
 ## Next Steps
 
-- Implement logout functionality in the navigation bar
 - Add comprehensive error handling and user feedback messages
 - Replace JSON server with a real backend API (e.g., Node.js/Express or ASP.NET)
 - Enhance security with password hashing and JWT token validation
@@ -21,6 +20,49 @@ This Angular application implements a role-based access control (RBAC) system. I
 - Implement unit tests and integration tests for components and services
 - Improve UI/UX with responsive design and better styling
 - Add form validation feedback and accessibility features
+
+## Prerequisites
+
+- Node.js and npm installed
+- Angular CLI installed globally (`npm install -g @angular/cli`)
+- JSON Server for mock backend (`npm install -g json-server`)
+
+## Backend Setup
+
+This application uses JSON Server as a mock backend. To set up the mock API:
+
+1. Create a `db.json` file in the project root with initial user data:
+
+```json
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "email": "admin@example.com",
+      "role": "ADMIN",
+      "password": "admin123"
+    },
+    {
+      "id": "2",
+      "username": "user",
+      "email": "user@example.com",
+      "role": "USER",
+      "password": "user123"
+    }
+  ]
+}
+```
+
+2. Start the JSON Server:
+
+```bash
+json-server --watch db.json --port 3000
+```
+
+This will start the mock API at `http://localhost:3000`.
+
+## Development server
 
 To start a local development server, run:
 
